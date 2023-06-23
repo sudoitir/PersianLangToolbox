@@ -10,8 +10,8 @@ import static ir.sudoit.persianlangtoolbox.core.utils.NumberUtil.isValidNumber;
 
 public final class PersianWordsConverter {
 
-    private static final ConverterOptions DefaultConverterOptions =
-            new ConverterOptions(false, false, null);
+    private static final ConverterOptions CONVERTER_OPTIONS =
+            new ConverterOptions(false, false, "ممیز", null);
 
     private static final Pattern MULTIPLE_SPACES_PATTERN = Pattern.compile("\\s+");
 
@@ -50,7 +50,7 @@ public final class PersianWordsConverter {
      */
     public static String convertToWords(String input) {
         if (isValidNumber(input)) {
-            return convertToWords(input, DefaultConverterOptions);
+            return convertToWords(input, CONVERTER_OPTIONS);
         } else
             return null;
     }
@@ -72,17 +72,13 @@ public final class PersianWordsConverter {
         Long fractional = 0L;
         fractional = getFractional(split, fractional);
 
-        if (Boolean.TRUE.equals(converterOptions.ignoreDecimal())) {
-            integerPart = Math.round(number);
-        }
-
         String convertedInteger = convertInternal(integerPart);
 
         String calculated;
         if (fractional == 0 || converterOptions.ignoreDecimal())
             calculated = convertedInteger;
         else {
-            calculated = calculateFractional(input, split, fractional, convertedInteger);
+            calculated = calculateFractional(input, split, fractional, convertedInteger, converterOptions);
         }
 
         if (converterOptions.currency())
@@ -99,9 +95,10 @@ public final class PersianWordsConverter {
                 .concat(converterOptions.currencyOptions().symbol()).trim();
     }
 
-    private static String calculateFractional(String input, String[] split, Long fractional, String convertedInteger) {
+    private static String calculateFractional(String input, String[] split, Long fractional, String convertedInteger,
+                                              ConverterOptions converterOptions) {
         var resultBuilder = new StringBuilder(convertedInteger);
-        resultBuilder.append(" ممیز ");
+        resultBuilder.append(" ").append(converterOptions.point()).append(" ");
 
         String[] fractionalWords = convertInternal(fractional).split(" ");
         for (String word : fractionalWords) {
