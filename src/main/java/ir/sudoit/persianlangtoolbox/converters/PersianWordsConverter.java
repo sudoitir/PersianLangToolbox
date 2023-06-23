@@ -13,8 +13,7 @@ public final class PersianWordsConverter {
     private static final ConverterOptions CONVERTER_OPTIONS =
             new ConverterOptions(false, false, "ممیز", null);
 
-    private static final Pattern MULTIPLE_SPACES_PATTERN = Pattern.compile("\\s+");
-
+    private static final Pattern MULTIPLE_SPACES_PATTERN = Pattern.compile("\\s+", Pattern.UNICODE_CHARACTER_CLASS);
     private static final String[] UNITS = {
             "", "یک", "دو", "سه", "چهار", "پنج", "شش", "هفت", "هشت", "نه", "ده",
             "یازده", "دوازده", "سیزده", "چهارده", "پانزده", "شانزده", "هفده", "هجده", "نوزده"
@@ -46,24 +45,24 @@ public final class PersianWordsConverter {
      * Converts a decimal number into its corresponding words representation in Persian (Farsi) language.
      *
      * @param input The String decimal number to convert.
-     * @return The words representation of the decimal number or null if number not valid.
+     * @return The words representation of the decimal number
+     * @throws NumberFormatException if input not a valid number
      */
     public static String convertToWords(String input) {
-        if (isValidNumber(input)) {
-            return convertToWords(input, CONVERTER_OPTIONS);
-        } else
-            return null;
+        return convertToWords(input, CONVERTER_OPTIONS);
     }
 
     /**
      * Converts a decimal number into its corresponding words representation in Persian (Farsi) language.
      *
-     * @param input The decimal number to convert.
+     * @param input            The decimal number to convert.
+     * @param converterOptions The options for the converter.
      * @return The words representation of the decimal number.
+     * @throws NumberFormatException if input not a valid number
      */
     public static String convertToWords(String input, ConverterOptions converterOptions) {
         if (!isValidNumber(input))
-            return null;
+            throw new NumberFormatException(String.format("%s not a valid number", input));
 
         String[] split = input.split("\\.");
         Double number = Double.parseDouble(input);
