@@ -4,13 +4,17 @@ import ir.sudoit.persianlangtoolbox.core.model.ConverterOptions;
 import ir.sudoit.persianlangtoolbox.core.model.CurrencyOptions;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class PersianWordsConverterTest {
 
 
     @Test
     void testConvertToWordsDefault() {
+        assertThat(PersianWordsConverter.convertToWords("15000D")).isNotNull();
+
         String number1 = "12345.0";
         String expectedWords1 = "دوازده هزار سیصد چهل و پنج";
         assertEquals(expectedWords1, PersianWordsConverter.convertToWords(number1));
@@ -108,5 +112,11 @@ class PersianWordsConverterTest {
                 new ConverterOptions(true, true, "و", new CurrencyOptions("یورو", ""))));
     }
 
+
+    @Test
+    void testConvertToWords_thenThrowException() {
+        assertThrows(NumberFormatException.class,
+                () -> PersianWordsConverter.convertToWords("This is not number"));
+    }
 
 }
