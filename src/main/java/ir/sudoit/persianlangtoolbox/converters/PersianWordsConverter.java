@@ -47,7 +47,7 @@ public class PersianWordsConverter {
 
         String convertedInteger = convertInternal(integerPart);
 
-        if (fractional == 0)
+        if (fractional == 0 || converterOptions.ignoreDecimal())
             return convertedInteger;
         else {
             return calculateFractional(input, split, fractional, convertedInteger);
@@ -98,30 +98,31 @@ public class PersianWordsConverter {
 
         var scaleIndex = 0;
         while (number > 0) {
-            long thousand = number % 1000;
+            long thousand = number % THOUSAND;
             if (thousand != 0) {
                 var currentWords = new StringBuilder();
 
-                if (thousand / 100 != 0) {
-                    currentWords.append(hundreds[(int) (thousand / 100)]).append(" ");
+                if (thousand / HUNDRED != 0) {
+                    currentWords.append(hundreds[(int) (thousand / HUNDRED)]).append(" ");
                 }
 
-                long tensUnits = thousand % 100;
-                if (tensUnits < 20) {
+                long tensUnits = thousand % HUNDRED;
+                if (tensUnits < TWENTY) {
                     currentWords.append(units[(int) tensUnits]);
                 } else {
-                    currentWords.append(tens[(int) (tensUnits / 10)]).append(" و ").append(units[(int) (tensUnits % 10)]);
+                    currentWords.append(tens[(int) (tensUnits / TEN)]).append(" و ").append(units[(int) (tensUnits % TEN)]);
                 }
 
                 currentWords.append(" ").append(scales[scaleIndex]);
                 words.insert(0, currentWords.toString().trim() + " ");
             }
 
-            number /= 1000;
+            number /= THOUSAND;
             scaleIndex++;
         }
         return words.toString().trim();
     }
 
-
+    public PersianWordsConverter() {
+    }
 }
