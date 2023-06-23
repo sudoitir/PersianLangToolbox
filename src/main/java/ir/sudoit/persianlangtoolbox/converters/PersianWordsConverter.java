@@ -6,10 +6,13 @@ import ir.sudoit.persianlangtoolbox.core.model.ConverterOptions;
 import static ir.sudoit.persianlangtoolbox.core.constant.NumberConstant.*;
 import static ir.sudoit.persianlangtoolbox.core.utils.NumberUtil.isValidNumber;
 
-public class PersianWordsConverter {
+public final class PersianWordsConverter {
 
     private static final ConverterOptions DefaultConverterOptions =
             new ConverterOptions(false, false, false);
+
+    private PersianWordsConverter() {
+    }
 
     /**
      * Converts a decimal number into its corresponding words representation in Persian (Farsi) language.
@@ -123,6 +126,4 @@ public class PersianWordsConverter {
         return words.toString().trim();
     }
 
-    public PersianWordsConverter() {
-    }
 }
