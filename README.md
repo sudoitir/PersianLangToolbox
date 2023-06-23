@@ -3,7 +3,6 @@
 [![Java CI](https://github.com/sudoitir/PersianLangToolbox/actions/workflows/maven.yml/badge.svg)](https://github.com/sudoitir/PersianLangToolbox/actions/workflows/maven.yml)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=sudoitir_PersianLangToolbox&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=sudoitir_PersianLangToolbox)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=sudoitir_PersianLangToolbox&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=sudoitir_PersianLangToolbox)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=sudoitir_PersianLangToolbox&metric=coverage)](https://sonarcloud.io/summary/new_code?id=sudoitir_PersianLangToolbox)
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=sudoitir_PersianLangToolbox&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=sudoitir_PersianLangToolbox)
 [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=sudoitir_PersianLangToolbox&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=sudoitir_PersianLangToolbox)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=sudoitir_PersianLangToolbox&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=sudoitir_PersianLangToolbox)
