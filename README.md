@@ -1,5 +1,5 @@
 # PersianLangToolbox
-[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=sudoitir_PersianLangToolbox)](https://sonarcloud.io/summary/new_code?id=sudoitir_PersianLangToolbox)
+
 [![Java CI with Maven](https://github.com/sudoitir/PersianLangToolbox/actions/workflows/maven.yml/badge.svg?branch=main)](https://github.com/sudoitir/PersianLangToolbox/actions/workflows/maven.yml)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=sudoitir_PersianLangToolbox&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=sudoitir_PersianLangToolbox)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=sudoitir_PersianLangToolbox&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=sudoitir_PersianLangToolbox)
@@ -12,6 +12,8 @@
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=sudoitir_PersianLangToolbox&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=sudoitir_PersianLangToolbox)
 
 [![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-black.svg)](https://sonarcloud.io/summary/new_code?id=sudoitir_PersianLangToolbox)
+
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=sudoitir_PersianLangToolbox)](https://sonarcloud.io/summary/new_code?id=sudoitir_PersianLangToolbox)
 
 ## This Project is not ready to use
 
