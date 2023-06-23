@@ -14,7 +14,4 @@
 
 [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=sudoitir_PersianLangToolbox)](https://sonarcloud.io/summary/new_code?id=sudoitir_PersianLangToolbox)
 
-## This Project is not ready to use
-
-
 Numeral To Currency Words | Persian Date Time
