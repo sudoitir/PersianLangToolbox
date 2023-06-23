@@ -24,7 +24,6 @@ public class PersianWordsConverter {
             return null;
     }
 
-
     /**
      * Converts a decimal number into its corresponding words representation in Persian (Farsi) language.
      *
@@ -51,25 +50,29 @@ public class PersianWordsConverter {
         if (fractional == 0)
             return convertedInteger;
         else {
-            var resultBuilder = new StringBuilder(convertedInteger);
-            resultBuilder.append(" ممیز ");
-
-            String[] fractionalWords = convertInternal(fractional).split(" ");
-            for (String word : fractionalWords) {
-                resultBuilder.append(word).append(" ");
-            }
-
-            int length;
-            if (input.endsWith("d") || input.endsWith("D")) {
-                length = input.substring(0, split[1].length() - 1).length();
-            } else
-                length = split[1].length();
-
-            int decimalIndex = Math.min(length, decimals.length - 1);
-            resultBuilder.append(decimals[decimalIndex]);
-
-            return resultBuilder.toString();
+            return calculateFractional(input, split, fractional, convertedInteger);
         }
+    }
+
+    private static String calculateFractional(String input, String[] split, Long fractional, String convertedInteger) {
+        var resultBuilder = new StringBuilder(convertedInteger);
+        resultBuilder.append(" ممیز ");
+
+        String[] fractionalWords = convertInternal(fractional).split(" ");
+        for (String word : fractionalWords) {
+            resultBuilder.append(word).append(" ");
+        }
+
+        int length;
+        if (input.endsWith("d") || input.endsWith("D")) {
+            length = input.substring(0, split[1].length() - 1).length();
+        } else
+            length = split[1].length();
+
+        int decimalIndex = Math.min(length, decimals.length - 1);
+        resultBuilder.append(decimals[decimalIndex]);
+
+        return resultBuilder.toString();
     }
 
     private static Long getFractional(String[] split, Long fractional) {
@@ -82,7 +85,6 @@ public class PersianWordsConverter {
         }
         return fractional;
     }
-
 
     private static String convertInternal(Long number) {
         if (number == 0) {
