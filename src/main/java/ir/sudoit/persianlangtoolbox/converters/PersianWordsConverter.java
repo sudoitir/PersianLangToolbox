@@ -1,191 +1,92 @@
 package ir.sudoit.persianlangtoolbox.converters;
 
-import ir.sudoit.persianlangtoolbox.core.local.LocalePersian;
-import ir.sudoit.persianlangtoolbox.core.model.ConverterOptions;
-import ir.sudoit.persianlangtoolbox.core.model.CurrencyOptions;
-import ir.sudoit.persianlangtoolbox.core.model.LocaleConfig;
-import ir.sudoit.persianlangtoolbox.core.model.NumberWordMapping;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import static ir.sudoit.persianlangtoolbox.core.utils.NumberUtil.*;
+import static ir.sudoit.persianlangtoolbox.core.constant.NumberConstant.*;
+import static ir.sudoit.persianlangtoolbox.core.utils.NumberUtil.isValidNumber;
 
 public class PersianWordsConverter {
 
-    private static final ConverterOptions DefaultConverterOptions =
-            new ConverterOptions(false, false, false, false, null);
-    private final ConverterOptions options;
 
-    public PersianWordsConverter(ConverterOptions options) {
-        if (options == null)
-            throw new IllegalArgumentException();
-        this.options = options;
+    public static void main(String[] args) {
+        String s = convertToWords(-22131236.5d);
+        System.out.println(s);
     }
 
-    public PersianWordsConverter() {
-        this.options = DefaultConverterOptions;
+
+    /**
+     * Converts a decimal number into its corresponding words representation in Persian (Farsi) language.
+     *
+     * @param input The String decimal number to convert.
+     * @return The words representation of the decimal number or null if number not valid.
+     */
+    public static String convertToWords(String input) {
+        if (isValidNumber(input)) {
+            var number = Double.parseDouble(input);
+            return convertToWords(number);
+        } else
+            return null;
     }
 
-    public static void main(String[] args) throws Exception {
-        PersianWordsConverter persianWordsConverter = new PersianWordsConverter();
-        String convert = persianWordsConverter.convert("60030610");
-        System.out.println(convert);
+    /**
+     * Converts a decimal number into its corresponding words representation in Persian (Farsi) language.
+     *
+     * @param number The decimal number to convert.
+     * @return The words representation of the decimal number.
+     */
+    public static String convertToWords(Double number) {
+        var integerPart = number.longValue();
+        Double fractionalNumber = number - integerPart;
+        var fractional = fractionalNumber.longValue();
 
+        boolean isFractional = fractionalNumber != 0;
+
+        String convertedInteger = convertInternal(integerPart);
+
+        if (!isFractional)
+            return convertedInteger;
+        else {
+            var words = new StringBuilder();
+            String s = convertInternal(fractional);
+            words.append(convertedInteger).append(" و ").append(s);
+            return words.toString();
+        }
     }
 
-    public String convert(String number) throws Exception {
-        return convert(number, this.options);
-    }
-
-    public String convert(String input, ConverterOptions options) throws Exception {
-        if (options == null)
-            throw new IllegalArgumentException();
-
-        if (!isValidNumber(input)) {
-            throw new Exception("Invalid Number \"" + input + "\"");
+    private static String convertInternal(Long number) {
+        if (number == 0) {
+            return "صفر";
+        }
+        if (number < 0) {
+            return "منفی " + convertInternal(-number);
         }
 
-        var number = Double.parseDouble(input);
+        var words = new StringBuilder();
 
-        if (options.ignoreDecimal()) {
-            number = Math.round(number);
-        }
+        var scaleIndex = 0;
+        while (number > 0) {
+            long thousand = number % 1000;
+            if (thousand != 0) {
+                var currentWords = new StringBuilder();
 
-        List<String> words;
-        if (options.currency()) {
-            words = convertCurrency(String.valueOf(number), options);
-        } else {
-            words = convertNumber(String.valueOf(number));
-        }
-        return String.join(" ", words);
-
-    }
-
-    protected List<String> convertNumber(String number) throws Exception {
-        LocalePersian locale = new LocalePersian();
-
-        boolean isFloat = isFloat(number);
-        var parseDouble = Double.parseDouble(number);
-
-
-        boolean isNegativeNumber = parseDouble < 0;
-        if (isNegativeNumber) {
-            parseDouble = Math.abs(parseDouble);
-        }
-
-        String[] split = String.valueOf(parseDouble).split("\\.");
-        boolean ignoreZero = isNumberZero(parseDouble) && locale.config().ignoreZeroInDecimals();
-        List<String> words = convertInternal(Integer.parseInt(split[0]));
-        if (isFloat && ignoreZero) {
-            words = new ArrayList<>();
-        }
-
-        List<String> wordsWithDecimal = new ArrayList<>();
-        if (isFloat) {
-            if (!ignoreZero) {
-                wordsWithDecimal.add(locale.config().texts().and());
-            }
-            if (split[1].startsWith("0") && locale.config().decimalLengthWordMapping() == null) {
-                List<String> zeroWords = new ArrayList<>();
-                for (char num : split[1].toCharArray()) {
-                    zeroWords.addAll(convertInternal(Character.getNumericValue(num)));
+                if (thousand / 100 != 0) {
+                    currentWords.append(hundreds[(int) (thousand / 100)]).append(" ");
                 }
-                wordsWithDecimal.addAll(zeroWords);
-            } else {
-                wordsWithDecimal.addAll(convertInternal(Integer.parseInt(split[1])));
-                String decimalLengthWord = locale.config().decimalLengthWordMapping().get(split[1].length());
-                if (decimalLengthWord != null) {
-                    wordsWithDecimal.add(decimalLengthWord);
+
+                long tensUnits = thousand % 100;
+                if (tensUnits < 20) {
+                    currentWords.append(units[(int) tensUnits]);
+                } else {
+                    currentWords.append(tens[(int) (tensUnits / 10)]).append(" و ").append(units[(int) (tensUnits % 10)]);
                 }
+
+                currentWords.append(" ").append(scales[scaleIndex]);
+                words.insert(0, currentWords.toString().trim() + " ");
             }
+
+            number /= 1000;
+            scaleIndex++;
         }
-
-        boolean isEmpty = words.isEmpty();
-        if (!isEmpty && isNegativeNumber) {
-            words.add(0, locale.config().texts().minus());
-        }
-        words.addAll(wordsWithDecimal);
-        return words;
-    }
-
-    protected List<String> convertCurrency(String number, ConverterOptions options) throws Exception {
-        LocalePersian locale = new LocalePersian();
-
-        var doubleNum = Double.parseDouble(number);
-
-        boolean isNegativeNumber = doubleNum < 0;
-        if (isNegativeNumber) {
-            doubleNum = Math.abs(doubleNum);
-        }
-
-        String[] split = number.split("\\.");
-        ArrayList<String> words = new ArrayList<>(convertInternal(Integer.parseInt(split[0])));
-
-        boolean ignoreZero = isNumberZero(doubleNum) && (options.ignoreZeroCurrency() ||
-                (locale.config().ignoreZeroInDecimals() && doubleNum == 0));
-
-        if (ignoreZero) {
-            words.clear();
-        }
-
-        ArrayList<String> wordsWithDecimal = new ArrayList<>();
-        boolean isFloat = isFloat(number);
-        if (isFloat) {
-            if (!ignoreZero) {
-                wordsWithDecimal.add(locale.config().texts().and());
-            }
-            wordsWithDecimal.addAll(convertInternal((int) (Double.parseDouble(split[1]) *
-                    (!locale.config().decimalLengthWordMapping().isEmpty() ? Math.pow(10, 2 - split[1].length()) : 1))));
-            String decimalLengthWord = locale.config().decimalLengthWordMapping().get(split[1].length());
-            if (decimalLengthWord != null && decimalLengthWord.length() > 0) {
-                wordsWithDecimal.add(decimalLengthWord);
-            }
-        }
-        boolean isEmpty = words.isEmpty() && wordsWithDecimal.isEmpty();
-        if (!isEmpty && isNegativeNumber) {
-            words.add(0, locale.config().texts().minus());
-        }
-        if (!wordsWithDecimal.isEmpty()) {
-            words.addAll(wordsWithDecimal);
-        }
-        return words;
-    }
-
-    protected List<String> convertInternal(long number) throws Exception {
-        LocalePersian locale = new LocalePersian();
-        LocaleConfig config = locale.config();
-
-
-        long finalNumber1 = number;
-        Optional<NumberWordMapping> match = config.numberWordsMapping().stream()
-                .filter(elem -> finalNumber1 >= elem.number())
-                .findFirst();
-
-        List<String> words = new ArrayList<>();
-        if (number <= 100 || (number < 1000 && config.namedLessThan1000())) {
-            words.add(match.get().value());
-            number -= match.get().number();
-            if (number > 0) {
-                if (config.splitWord() != null && !config.splitWord().isEmpty()) {
-                    words.add(config.splitWord());
-                }
-                words.addAll(convertInternal(number));
-            }
-            return words;
-        }
-
-        long quotient = number / match.get().number();
-        long remainder = number % match.get().number();
-        String matchValue = match.get().value();
-        words.addAll(convertInternal(quotient));
-        words.add(matchValue);
-        if (remainder > 0) {
-
-            words.addAll(convertInternal(remainder));
-        }
-        return words;
+        return words.toString().trim();
     }
 
 

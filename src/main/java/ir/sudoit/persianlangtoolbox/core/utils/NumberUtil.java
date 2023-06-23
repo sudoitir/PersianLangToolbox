@@ -15,9 +15,6 @@ public class NumberUtil {
         return true;
     }
 
-    public static double toFixed(double number, int precision) {
-        return Double.parseDouble(String.format("%." + precision + "f", number));
-    }
 
     public static boolean isFloat(String number) {
         try {
