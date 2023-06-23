@@ -37,6 +37,8 @@
         <maven.javadoc.plugin>3.5.0</maven.javadoc.plugin>
         <maven.gpg.plugin>3.1.0</maven.gpg.plugin>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <sonar.organization>sudoitir</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <sonar.coverage.jacoco.xmlReportPaths>
             ../app-it/target/site/jacoco-aggregate/jacoco.xml
         </sonar.coverage.jacoco.xmlReportPaths>
@@ -140,7 +142,7 @@
                 </executions>
             </plugin>
 
-            <!-- GPG Plugin -->
+<!--            &lt;!&ndash; GPG Plugin &ndash;&gt;
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
@@ -154,7 +156,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
 
