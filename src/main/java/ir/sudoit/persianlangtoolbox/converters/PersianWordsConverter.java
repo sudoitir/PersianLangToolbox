@@ -1,17 +1,15 @@
 package ir.sudoit.persianlangtoolbox.converters;
 
 
+import ir.sudoit.persianlangtoolbox.core.model.ConverterOptions;
+
 import static ir.sudoit.persianlangtoolbox.core.constant.NumberConstant.*;
 import static ir.sudoit.persianlangtoolbox.core.utils.NumberUtil.isValidNumber;
 
 public class PersianWordsConverter {
 
-
-    public static void main(String[] args) {
-        String s = convertToWords(-22131236.5d);
-        System.out.println(s);
-    }
-
+    private static final ConverterOptions DefaultConverterOptions =
+            new ConverterOptions(false, false, false);
 
     /**
      * Converts a decimal number into its corresponding words representation in Persian (Farsi) language.
@@ -21,36 +19,70 @@ public class PersianWordsConverter {
      */
     public static String convertToWords(String input) {
         if (isValidNumber(input)) {
-            var number = Double.parseDouble(input);
-            return convertToWords(number);
+            return convertToWords(input, DefaultConverterOptions);
         } else
             return null;
     }
 
+
     /**
      * Converts a decimal number into its corresponding words representation in Persian (Farsi) language.
      *
-     * @param number The decimal number to convert.
+     * @param input The decimal number to convert.
      * @return The words representation of the decimal number.
      */
-    public static String convertToWords(Double number) {
-        var integerPart = number.longValue();
-        Double fractionalNumber = number - integerPart;
-        var fractional = fractionalNumber.longValue();
+    public static String convertToWords(String input, ConverterOptions converterOptions) {
+        if (!isValidNumber(input))
+            return null;
 
-        boolean isFractional = fractionalNumber != 0;
+        String[] split = input.split("\\.");
+        Double number = Double.parseDouble(input);
+        var integerPart = number.longValue();
+
+        Long fractional = 0L;
+        fractional = getFractional(split, fractional);
+
+        if (Boolean.TRUE.equals(converterOptions.ignoreDecimal())) {
+            integerPart = Math.round(number);
+        }
 
         String convertedInteger = convertInternal(integerPart);
 
-        if (!isFractional)
+        if (fractional == 0)
             return convertedInteger;
         else {
-            var words = new StringBuilder();
-            String s = convertInternal(fractional);
-            words.append(convertedInteger).append(" و ").append(s);
-            return words.toString();
+            var resultBuilder = new StringBuilder(convertedInteger);
+            resultBuilder.append(" ممیز ");
+
+            String[] fractionalWords = convertInternal(fractional).split(" ");
+            for (String word : fractionalWords) {
+                resultBuilder.append(word).append(" ");
+            }
+
+            int length;
+            if (input.endsWith("d") || input.endsWith("D")) {
+                length = input.substring(0, split[1].length() - 1).length();
+            } else
+                length = split[1].length();
+
+            int decimalIndex = Math.min(length, decimals.length - 1);
+            resultBuilder.append(decimals[decimalIndex]);
+
+            return resultBuilder.toString();
         }
     }
+
+    private static Long getFractional(String[] split, Long fractional) {
+        if (split.length > 1) {
+            String fractionalPart = split[1];
+            if (fractionalPart.endsWith("d") || fractionalPart.endsWith("D")) {
+                fractionalPart = fractionalPart.substring(0, fractionalPart.length() - 1);
+            }
+            fractional = Long.parseLong(fractionalPart);
+        }
+        return fractional;
+    }
+
 
     private static String convertInternal(Long number) {
         if (number == 0) {

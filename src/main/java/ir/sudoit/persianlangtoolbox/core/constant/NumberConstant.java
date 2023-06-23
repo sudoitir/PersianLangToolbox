@@ -20,9 +20,7 @@ public class NumberConstant {
     };
 
     public static final String[] decimals = {
-            "", "دهم", "صدم", "هزارم", "ده هزارم", "صد هزارم", "میلیونیم", "ده میلیونیم", "صد میلیونیم", "billionth",
-            "ten-billionth", "hundred-billionth", "trillionth", "ten-trillionth", "hundred-trillionth", "quadrillionth",
-            "ten-quadrillionth", "hundred-quadrillionth", "quintillionth"
+            "", "دهم", "صدم", "هزارم", "میلیونیم", "میلیاردم", "تریلیونم", "کادریلیون", "کنتیلیون"
     };
 
 }
