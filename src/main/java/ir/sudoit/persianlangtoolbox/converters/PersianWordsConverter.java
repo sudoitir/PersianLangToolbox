@@ -11,6 +11,30 @@ public final class PersianWordsConverter {
     private static final ConverterOptions DefaultConverterOptions =
             new ConverterOptions(false, false, false);
 
+    private static final String[] UNITS = {
+            "", "یک", "دو", "سه", "چهار", "پنج", "شش", "هفت", "هشت", "نه", "ده",
+            "یازده", "دوازده", "سیزده", "چهارده", "پانزده", "شانزده", "هفده", "هجده", "نوزده"
+    };
+
+    private static final String[] TENS = {
+            "", "", "بیست", "سی", "چهل", "پنجاه", "شست", "هفتاد", "هشتاد", "نود"
+    };
+
+    private static final String[] HUNDREDS = {
+            "", "صد", "دویست", "سیصد", "چهارصد", "پانصد", "ششصد", "هفتصد", "هشتصد", "نهصد", "هزار"
+    };
+
+    private static final String[] SCALES = {
+            "", "هزار", "میلیون", "میلیارد", "تریلیون", "کوآدریلیون", "کوینتیلیون", "سکستیلیون", "سپتیلیون", "اکتیلیون",
+            "نونیلیون", "دسیلیون", "آندسیلیون", "دودسیلیون", "تریدسیلیون", "کوادریدسیلیون", "کویندسیلیون", "سیکستیدسیلیون",
+            "سپتاندسیلیون", "اکتودسیلیون", "نونیدسیلیون", "ویجینتیلیون"
+    };
+
+
+    private static final String[] DECIMALS = {
+            "", "دهم", "صدم", "هزارم", "میلیونیم", "میلیاردم", "تریلیونم", "کادریلیون", "کنتیلیون"
+    };
+
     private PersianWordsConverter() {
     }
 
@@ -72,8 +96,8 @@ public final class PersianWordsConverter {
         } else
             length = split[1].length();
 
-        int decimalIndex = Math.min(length, decimals.length - 1);
-        resultBuilder.append(decimals[decimalIndex]);
+        int decimalIndex = Math.min(length, DECIMALS.length - 1);
+        resultBuilder.append(DECIMALS[decimalIndex]);
 
         return resultBuilder.toString();
     }
@@ -106,17 +130,17 @@ public final class PersianWordsConverter {
                 var currentWords = new StringBuilder();
 
                 if (thousand / HUNDRED != 0) {
-                    currentWords.append(hundreds[(int) (thousand / HUNDRED)]).append(" ");
+                    currentWords.append(HUNDREDS[(int) (thousand / HUNDRED)]).append(" ");
                 }
 
                 long tensUnits = thousand % HUNDRED;
                 if (tensUnits < TWENTY) {
-                    currentWords.append(units[(int) tensUnits]);
+                    currentWords.append(UNITS[(int) tensUnits]);
                 } else {
-                    currentWords.append(tens[(int) (tensUnits / TEN)]).append(" و ").append(units[(int) (tensUnits % TEN)]);
+                    currentWords.append(TENS[(int) (tensUnits / TEN)]).append(" و ").append(UNITS[(int) (tensUnits % TEN)]);
                 }
 
-                currentWords.append(" ").append(scales[scaleIndex]);
+                currentWords.append(" ").append(SCALES[scaleIndex]);
                 words.insert(0, currentWords.toString().trim() + " ");
             }
 
