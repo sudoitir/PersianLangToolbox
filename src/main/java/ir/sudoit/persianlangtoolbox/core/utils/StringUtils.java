@@ -1,15 +1,17 @@
 package ir.sudoit.persianlangtoolbox.core.utils;
 
 
-public class StringUtils {
+public final class StringUtils {
 
+    private StringUtils() {
+    }
 
     public static boolean isBlank(String str) {
         int strLen;
         if (str == null || (strLen = str.length()) == 0) {
             return true;
         }
-        for (int i = 0; i < strLen; i++) {
+        for (var i = 0; i < strLen; i++) {
             if (!Character.isWhitespace(str.charAt(i))) {
                 return false;
             }
@@ -17,7 +19,7 @@ public class StringUtils {
         return true;
     }
 
-    public static boolean isAllBlank(String... strs) {
+    public static boolean isAllBlank(String[] strs) {
         for (String str : strs) {
             if (isNotBlank(str)) {
                 return false;
@@ -39,9 +41,10 @@ public class StringUtils {
     }
 
     public static String defaultIfEmpty(String str, String defaultStr) {
-        return StringUtils.isEmpty(str) ? defaultStr : str;
+        if (StringUtils.isEmpty(str))
+            return defaultStr;
+        return str;
     }
 
-    private StringUtils() {
-    }
+
 }

@@ -1,7 +1,9 @@
 package ir.sudoit.persianlangtoolbox.core.utils;
 
-public class NumberUtil {
+public final class NumberUtil {
 
+    private NumberUtil() {
+    }
 
     public static boolean isDigits(String input) {
         if (StringUtils.isEmpty(input)) {
@@ -43,6 +45,4 @@ public class NumberUtil {
         return number >= 0 && number < 1;
     }
 
-    private NumberUtil() {
-    }
 }
