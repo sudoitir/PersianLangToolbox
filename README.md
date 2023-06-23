@@ -1,6 +1,6 @@
 # PersianLangToolbox
 
-[![Java CI with Maven](https://github.com/sudoitir/PersianLangToolbox/actions/workflows/maven.yml/badge.svg?branch=main)](https://github.com/sudoitir/PersianLangToolbox/actions/workflows/maven.yml)
+[![Java CI](https://github.com/sudoitir/PersianLangToolbox/actions/workflows/maven.yml/badge.svg)](https://github.com/sudoitir/PersianLangToolbox/actions/workflows/maven.yml)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=sudoitir_PersianLangToolbox&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=sudoitir_PersianLangToolbox)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=sudoitir_PersianLangToolbox&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=sudoitir_PersianLangToolbox)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=sudoitir_PersianLangToolbox&metric=coverage)](https://sonarcloud.io/summary/new_code?id=sudoitir_PersianLangToolbox)
