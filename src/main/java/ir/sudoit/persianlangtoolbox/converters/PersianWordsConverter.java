@@ -3,13 +3,17 @@ package ir.sudoit.persianlangtoolbox.converters;
 
 import ir.sudoit.persianlangtoolbox.core.model.ConverterOptions;
 
+import java.util.regex.Pattern;
+
 import static ir.sudoit.persianlangtoolbox.core.constant.NumberConstant.*;
 import static ir.sudoit.persianlangtoolbox.core.utils.NumberUtil.isValidNumber;
 
 public final class PersianWordsConverter {
 
     private static final ConverterOptions DefaultConverterOptions =
-            new ConverterOptions(false, false, false);
+            new ConverterOptions(false, false, null);
+
+    private static final Pattern MULTIPLE_SPACES_PATTERN = Pattern.compile("\\s+");
 
     private static final String[] UNITS = {
             "", "یک", "دو", "سه", "چهار", "پنج", "شش", "هفت", "هشت", "نه", "ده",
@@ -74,11 +78,25 @@ public final class PersianWordsConverter {
 
         String convertedInteger = convertInternal(integerPart);
 
+        String calculated;
         if (fractional == 0 || converterOptions.ignoreDecimal())
-            return convertedInteger;
+            calculated = convertedInteger;
         else {
-            return calculateFractional(input, split, fractional, convertedInteger);
+            calculated = calculateFractional(input, split, fractional, convertedInteger);
         }
+
+        if (converterOptions.currency())
+            return addCurrencyWord(converterOptions, calculated);
+        else
+            return calculated;
+    }
+
+    private static String addCurrencyWord(ConverterOptions converterOptions, String calculated) {
+        return calculated
+                .concat(" ")
+                .concat(converterOptions.currencyOptions().name())
+                .concat(" ")
+                .concat(converterOptions.currencyOptions().symbol()).trim();
     }
 
     private static String calculateFractional(String input, String[] split, Long fractional, String convertedInteger) {
@@ -147,7 +165,8 @@ public final class PersianWordsConverter {
             number /= THOUSAND;
             scaleIndex++;
         }
-        return words.toString().trim();
+        var trimmed = words.toString();
+        return MULTIPLE_SPACES_PATTERN.matcher(trimmed).replaceAll(" ").trim();
     }
 
 }
