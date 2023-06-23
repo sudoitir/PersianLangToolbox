@@ -19,6 +19,7 @@
   <a href="https://sonarcloud.io/summary/new_code?id=sudoitir_PersianLangToolbox">
     <img src="https://sonarcloud.io/api/project_badges/measure?project=sudoitir_PersianLangToolbox&metric=reliability_rating" alt="Reliability Rating">
   </a>
+  <br>
   <a href="https://sonarcloud.io/summary/new_code?id=sudoitir_PersianLangToolbox">
     <img src="https://sonarcloud.io/api/project_badges/measure?project=sudoitir_PersianLangToolbox&metric=duplicated_lines_density" alt="Duplicated Lines (%)">
   </a>
@@ -28,6 +29,7 @@
   <a href="https://sonarcloud.io/summary/new_code?id=sudoitir_PersianLangToolbox">
     <img src="https://sonarcloud.io/api/project_badges/measure?project=sudoitir_PersianLangToolbox&metric=bugs" alt="Bugs">
   </a>
+  <br>
   <a href="https://sonarcloud.io/summary/new_code?id=sudoitir_PersianLangToolbox">
     <img src="https://sonarcloud.io/api/project_badges/measure?project=sudoitir_PersianLangToolbox&metric=security_rating" alt="Security Rating">
   </a>
@@ -35,5 +37,6 @@
     <img src="https://sonarcloud.io/api/project_badges/measure?project=sudoitir_PersianLangToolbox&metric=sqale_rating" alt="Maintainability Rating">
   </a>
 </p>
+
 
 ## Numeral To Currency Words | Persian Date Time
