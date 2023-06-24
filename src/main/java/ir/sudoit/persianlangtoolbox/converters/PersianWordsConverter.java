@@ -164,7 +164,7 @@ public final class PersianWordsConverter {
                     // Append the Persian words for the tens and units digits to the StringBuilder object.
                     currentWords.append(TENS[(int) (tensUnits / TEN)]).append(" و ").append(UNITS[(int) (tensUnits % TEN)]);
                 }
-                // Append the Persian word for the current scale (i.e. ones, thousands, millions, etc.) to the StringBuilder object.
+                // Append the Persian word for the current scale (i.e. thousands, millions, etc.) to the StringBuilder object.
                 currentWords.append(" ").append(SCALES[scaleIndex]);
                 // Insert the Persian words for the current three digits at the beginning of the StringBuilder object.
                 words.insert(0, currentWords.toString().trim() + " ");
