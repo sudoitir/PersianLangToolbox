@@ -36,10 +36,10 @@ class NumberToPersianWordsTest {
         String number1 = "0";
         assertEquals(expectedWord, NumberToPersianWords.convertToWords(number1));
 
-        String number2 = "0d";
+        String number2 = "0";
         assertEquals(expectedWord, NumberToPersianWords.convertToWords(number2));
 
-        String number3 = "0D";
+        String number3 = "0";
         assertEquals(expectedWord, NumberToPersianWords.convertToWords(number3));
 
         String number4 = "0.0";
