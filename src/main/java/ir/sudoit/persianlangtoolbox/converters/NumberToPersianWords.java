@@ -71,17 +71,20 @@ public final class NumberToPersianWords {
         Double number = Double.parseDouble(input);
         var integerPart = number.longValue();
 
-        Long fractional = 0L;
-        fractional = getFractional(split, fractional);
+
+        String fractional = getFractional(split);
 
         String convertedInteger = convertInternal(integerPart);
 
         String calculated;
-        if (fractional == 0 || converterOptions.ignoreDecimal()) {
+        if (fractional.isEmpty() || fractional.isBlank())
+            fractional = "0";
+
+        if (("0".equals(fractional)) || converterOptions.ignoreDecimal()) {
             calculated = addCurrencyWord(converterOptions, convertedInteger, false);
         } else {
             String currencyWord = addCurrencyWord(converterOptions, convertedInteger, true);
-            String calculatedFractional = calculateFractional(input, split, fractional, currencyWord, converterOptions);
+            String calculatedFractional = calculateFractional(split, fractional, currencyWord, converterOptions);
             calculated = addCurrencyWord(converterOptions, calculatedFractional, false);
         }
         return MULTIPLE_SPACES_PATTERN.matcher(calculated).replaceAll(" ").trim();
@@ -121,21 +124,17 @@ public final class NumberToPersianWords {
     }
 
 
-    private static String calculateFractional(String input, String[] split, Long fractional, String convertedInteger,
+    private static String calculateFractional(String[] split, String fractional, String convertedInteger,
                                               ConverterOptions converterOptions) {
         var resultBuilder = new StringBuilder(convertedInteger);
         resultBuilder.append(" ").append(converterOptions.point()).append(" ");
 
-        String[] fractionalWords = convertInternal(fractional).split(" ");
+        String[] fractionalWords = convertInternal(Long.parseLong(fractional)).split(" ");
         for (String word : fractionalWords) {
             resultBuilder.append(word).append(" ");
         }
 
-        int length;
-        if (input.endsWith("d") || input.endsWith("D")) {
-            length = input.substring(0, split[1].length() - 1).length();
-        } else
-            length = split[1].length();
+        int length = split[1].length();
 
         int decimalIndex = Math.min(length, DECIMALS.length - 1);
         if (!converterOptions.currency())
@@ -144,13 +143,10 @@ public final class NumberToPersianWords {
         return resultBuilder.toString();
     }
 
-    private static Long getFractional(String[] split, Long fractional) {
+    private static String getFractional(String[] split) {
+        var fractional = "";
         if (split.length > 1) {
-            String fractionalPart = split[1];
-            if (fractionalPart.endsWith("d") || fractionalPart.endsWith("D")) {
-                fractionalPart = fractionalPart.substring(0, fractionalPart.length() - 1);
-            }
-            fractional = Long.parseLong(fractionalPart);
+            fractional = String.valueOf(split[1]);
         }
         return fractional;
     }
