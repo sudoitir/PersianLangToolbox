@@ -61,26 +61,18 @@ String result = NumberToPersianWords.convertToWords(stringNumber,
     )
 );
 ```
-<ul>
-    <li>
-        <code>stringNumber</code>:
-        The number as a string that you want to convert.
-    </li>
-    <li><code>ConverterOptions</code>:
-        The options for formatting the conversion, including:
-        <ul>
-            <li><code>true</code> for add currency word after converted word (e.g., "سی و پنج تومان") </li>
-            <li><code>false</code> for excluding the fractional part (e.g., "سی و پنج") | <code>true</code> for including the fractional part (e.g., "سی و پنج ممیز یک دهم")</li>
-            <li><code>String</code> for using the conjunction "ممیز" or "و" between integer and fractional parts (e.g., " سی و پنج ممیز یک دهم")..</li>
-            <li><code>CurrencyOptions</code>: The options for formatting currency, including:
-                <ul>
-                    <li>"دلار" as the currency name (e.g., "صد دلار").</li>
-                    <li>"$" as the currency symbol (e.g., "صد دلار $").</li>
-                </ul>
-            </li>
-        </ul>
-    </li>
-</ul>
+- `stringNumber`:
+  The number as a string that you want to convert.
+
+- `ConverterOptions`:
+  The options for formatting the conversion, including:
+    - `true` for adding the currency word after the converted word (e.g., "سی و پنج تومان").
+    - `false` for excluding the fractional part (e.g., "سی و پنج") or `true` for including the fractional part (e.g., "سی و پنج ممیز یک دهم").
+    - `String` for using the conjunction "ممیز" or "و" between the integer and fractional parts (e.g., "سی و پنج ممیز یک دهم").
+    - `CurrencyOptions`: The options for formatting currency, including:
+        - "دلار" as the currency name (e.g., "صد دلار").
+        - "$" as the currency symbol (e.g., "صد دلار $").
+
 
 ```java
 stringNumber = "35.123";
