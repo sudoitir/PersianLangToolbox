@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import static ir.sudoit.persianlangtoolbox.core.constant.NumberConstant.*;
 import static ir.sudoit.persianlangtoolbox.core.utils.NumberUtil.isValidNumber;
+import static ir.sudoit.persianlangtoolbox.core.utils.NumberUtil.trimTrailingZeros;
 
 public final class NumberToPersianWords {
 
@@ -64,6 +65,8 @@ public final class NumberToPersianWords {
         if (!isValidNumber(input))
             throw new NumberFormatException(String.format("%s not a valid number", input));
 
+        input = trimTrailingZeros(input);
+
         String[] split = input.split("\\.");
         Double number = Double.parseDouble(input);
         var integerPart = number.longValue();
@@ -74,25 +77,49 @@ public final class NumberToPersianWords {
         String convertedInteger = convertInternal(integerPart);
 
         String calculated;
-        if (fractional == 0 || converterOptions.ignoreDecimal())
-            calculated = convertedInteger;
-        else {
-            calculated = calculateFractional(input, split, fractional, convertedInteger, converterOptions);
+        if (fractional == 0 || converterOptions.ignoreDecimal()) {
+            calculated = addCurrencyWord(converterOptions, convertedInteger, false);
+        } else {
+            String currencyWord = addCurrencyWord(converterOptions, convertedInteger, true);
+            String calculatedFractional = calculateFractional(input, split, fractional, currencyWord, converterOptions);
+            calculated = addCurrencyWord(converterOptions, calculatedFractional, false);
+        }
+        return MULTIPLE_SPACES_PATTERN.matcher(calculated).replaceAll(" ").trim();
+    }
+
+    private static String addCurrencyWord(ConverterOptions converterOptions, String calculated, boolean isFractional) {
+        var currencyOptions = converterOptions.currencyOptions();
+        if (isFractional) {
+            if (currencyOptions != null) {
+                String name = currencyOptions.name();
+                String symbol = currencyOptions.symbol();
+
+                if (name != null && symbol != null) {
+                    return calculated
+                            .concat(" ")
+                            .concat(name)
+                            .concat(" ")
+                            .concat(symbol).trim();
+                }
+            }
+        } else {
+            if (currencyOptions != null) {
+                String name = currencyOptions.fractionalName();
+                String symbol = currencyOptions.fractionalSymbol();
+
+                if (name != null && symbol != null) {
+                    return calculated
+                            .concat(" ")
+                            .concat(name)
+                            .concat(" ")
+                            .concat(symbol).trim();
+                }
+            }
         }
 
-        if (converterOptions.currency())
-            return addCurrencyWord(converterOptions, calculated);
-        else
-            return calculated;
+        return calculated;
     }
 
-    private static String addCurrencyWord(ConverterOptions converterOptions, String calculated) {
-        return calculated
-                .concat(" ")
-                .concat(converterOptions.currencyOptions().name())
-                .concat(" ")
-                .concat(converterOptions.currencyOptions().symbol()).trim();
-    }
 
     private static String calculateFractional(String input, String[] split, Long fractional, String convertedInteger,
                                               ConverterOptions converterOptions) {
@@ -111,7 +138,8 @@ public final class NumberToPersianWords {
             length = split[1].length();
 
         int decimalIndex = Math.min(length, DECIMALS.length - 1);
-        resultBuilder.append(DECIMALS[decimalIndex]);
+        if (!converterOptions.currency())
+            resultBuilder.append(DECIMALS[decimalIndex]);
 
         return resultBuilder.toString();
     }
@@ -159,7 +187,7 @@ public final class NumberToPersianWords {
                     // Append the Persian word for the last two digits to the StringBuilder object.
                     currentWords.append(UNITS[(int) tensUnits]);
 
-                // If the last two digits are twenty or greater, we need to use the Persian word for the tens digit followed by the Persian word for the units digit.
+                    // If the last two digits are twenty or greater, we need to use the Persian word for the tens digit followed by the Persian word for the units digit.
                 } else {
                     // Append the Persian words for the tens and units digits to the StringBuilder object.
                     currentWords.append(TENS[(int) (tensUnits / TEN)]).append(" و ").append(UNITS[(int) (tensUnits % TEN)]);
@@ -176,9 +204,7 @@ public final class NumberToPersianWords {
             scaleIndex++;
         }
         // Convert the StringBuilder object to a String.
-        var wordsString = words.toString();
-        // Trim any leading or trailing spaces and replace any multiple spaces with a single space, then return the resulting String as the final output of the method.
-        return MULTIPLE_SPACES_PATTERN.matcher(wordsString).replaceAll(" ").trim();
+        return words.toString().trim();
     }
 
 }
