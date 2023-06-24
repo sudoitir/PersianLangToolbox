@@ -1,4 +1,4 @@
-# PersianLangToolbox
+# Persian Lang Toolbox
 
 
 <a href=" https://github.com/sudoitir/PersianLangToolbox/actions/workflows/maven.yml">
