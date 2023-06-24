@@ -57,59 +57,70 @@ class NumberToPersianWordsTest {
 
 
     @Test
-    void testConvertToWordsWithConfig() {
-        String number1 = "100000.0";
-        String expectedWords1 = "صد هزار تومان";
+    void testConvertToWordsWithCurrencyConfig() {
+
+        CurrencyOptions options = new CurrencyOptions("تومان", "", "ریال", "");
+        CurrencyOptions options1 = new CurrencyOptions("دلار", "", "سنت", "");
+        CurrencyOptions options2 = new CurrencyOptions("یورو", "", "سنت", "");
+        CurrencyOptions options3 = new CurrencyOptions("", "$", "", "");
+
+        String number1 = "100000.000000";
+        String expectedWords1 = "صد هزار ریال";
         assertEquals(expectedWords1, NumberToPersianWords.convertToWords(number1,
-                new ConverterOptions(true, false, "ممیز", new CurrencyOptions("تومان", ""))));
+                new ConverterOptions(true, false, "ممیز", options)));
 
         String number2 = "3451234.567";
-        String expectedWords2 = "سه میلیون چهارصد پنجاه و یک هزار دویست سی و چهار ممیز پانصد شست و هفت هزارم تومان";
+        String expectedWords2 = "سه میلیون چهارصد پنجاه و یک هزار دویست سی و چهار تومان و پانصد شست و هفت ریال";
         assertEquals(expectedWords2, NumberToPersianWords.convertToWords(number2,
-                new ConverterOptions(true, false, "ممیز", new CurrencyOptions("تومان", ""))));
+                new ConverterOptions(true, false, "و", options)));
 
         String number3 = "116";
-        String expectedWords3 = "صد شانزده تومان";
+        String expectedWords3 = "صد شانزده ریال";
         assertEquals(expectedWords3, NumberToPersianWords.convertToWords(number3,
-                new ConverterOptions(true, false, "و", new CurrencyOptions("تومان", ""))));
+                new ConverterOptions(true, false, "و", options)));
 
-        String number4 = "123456.54321D";
-        String expectedWords4 = "صد بیست و سه هزار چهارصد پنجاه و شش و پنجاه و چهار هزار سیصد بیست و یک میلیاردم ریال";
+        String number4 = "123456.54321";
+        String expectedWords4 = "صد بیست و سه هزار چهارصد پنجاه و شش دلار و پنجاه و چهار هزار سیصد بیست و یک سنت";
         assertEquals(expectedWords4, NumberToPersianWords.convertToWords(number4,
-                new ConverterOptions(true, false, "و", new CurrencyOptions("ریال", ""))));
+                new ConverterOptions(true, false, "و", options1)));
 
-        String number5 = "10000000000000D";
+        String number5 = "10000000000000";
         String expectedWords5 = "ده تریلیون ریال";
         assertEquals(expectedWords5, NumberToPersianWords.convertToWords(number5,
-                new ConverterOptions(true, false, "و", new CurrencyOptions("ریال", ""))));
+                new ConverterOptions(true, false, "و", options)));
 
 
         String number6 = "10000000030000";
-        String expectedWords6 = "ده تریلیون سی و هزار دلار $";
+        String expectedWords6 = "ده تریلیون سی و هزار";
         assertEquals(expectedWords6, NumberToPersianWords.convertToWords(number6,
-                new ConverterOptions(true, false, "و", new CurrencyOptions("دلار", "$"))));
+                new ConverterOptions(true, false, "و", options3)));
 
 
-        String number7 = "10.000000001";
-        String expectedWords7 = "ده و یک کنتیلیون دلار";
+        String number7 = "10.1";
+        String expectedWords7 = "ده تومان و یک ریال";
         assertEquals(expectedWords7, NumberToPersianWords.convertToWords(number7,
-                new ConverterOptions(true, false, "و", new CurrencyOptions("دلار", ""))));
+                new ConverterOptions(true, false, "و", options)));
 
 
         String number8 = "-42308578273405.44321";
-        String expectedWords8 = "منفی چهل و دو تریلیون سیصد هشت میلیارد پانصد هفتاد و هشت میلیون دویست هفتاد و سه هزار چهارصد پنج یورو";
+        String expectedWords8 = "منفی چهل و دو تریلیون سیصد هشت میلیارد پانصد هفتاد و هشت میلیون دویست هفتاد و سه هزار چهارصد پنج یورو و چهل و چهار هزار سیصد بیست و یک سنت";
         assertEquals(expectedWords8, NumberToPersianWords.convertToWords(number8,
-                new ConverterOptions(true, true, "و", new CurrencyOptions("یورو", ""))));
+                new ConverterOptions(true, false, "و", options2)));
 
         String number9 = "1.5";
-        String expectedWords9 = "یک یورو";
+        String expectedWords9 = "یک سنت";
         assertEquals(expectedWords9, NumberToPersianWords.convertToWords(number9,
-                new ConverterOptions(true, true, "و", new CurrencyOptions("یورو", ""))));
+                new ConverterOptions(true, true, "و", options2)));
 
         String number10 = "1.9";
-        String expectedWords10 = "یک یورو";
+        String expectedWords10 = "یک سنت";
         assertEquals(expectedWords10, NumberToPersianWords.convertToWords(number10,
-                new ConverterOptions(true, true, "و", new CurrencyOptions("یورو", ""))));
+                new ConverterOptions(true, true, "و", options2)));
+
+        String number11 = "10.10000000";
+        String expectedWords11 = "ده تومان و یک ریال";
+        assertEquals(expectedWords11, NumberToPersianWords.convertToWords(number11,
+                new ConverterOptions(true, false, "و", options)));
     }
 
 
