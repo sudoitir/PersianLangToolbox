@@ -47,7 +47,7 @@ Persian Lang Toolbox is a Java library for converting Persian numbers to words a
 
 ## Usage
 
-To convert a Persian number to words, use the `PersianWordsConverter.convertToWords()` method with the following parameters:
+To convert a number to Persian words, use the `PersianWordsConverter.convertToWords()` method with the following parameters:
 
 ```java
 String result = PersianWordsConverter.convertToWords(stringNumber,
