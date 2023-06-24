@@ -46,11 +46,11 @@
 
 Persian Lang Toolbox is a Java library for converting Persian numbers to words and providing additional options for currency.
 
-[Go to Convert To Words Usage](#convert-to-words-usage)
+[Go to Number To Persian Words](#number-to-persian-words)
 <br>
 [Go to Persian Number Converter](#persian-number-converter)
 
-## Convert To Words Usage
+## Number To Persian Words
 
 To convert a number to Persian words, use the `NumberToPersianWords.convertToWords()` method with the following parameters:
 
@@ -88,6 +88,7 @@ The above code will output:
 ```
 سی و پنج دلار
 ```
+<br>
 
 ```java
 stringNumber = "1000";
