@@ -46,7 +46,7 @@
 
 Persian Lang Toolbox is a Java library for converting Persian numbers to words and providing additional options for currency.
 
-## Usage
+### Convert To Words Usage
 
 To convert a number to Persian words, use the `PersianWordsConverter.convertToWords()` method with the following parameters:
 
@@ -66,7 +66,7 @@ String result = PersianWordsConverter.convertToWords(stringNumber,
         The options for formatting the conversion, including:
         <ul>
             <li><code>true</code> for add currency word after converted word (e.g., "سی و پنج تومان") </li>
-            <li><code>false</code> for excluding the fractional part (e.g., "سی و پنج").</li>
+            <li><code>false</code> for excluding the fractional part (e.g., "سی و پنج") | <code>true</code> for including the fractional part (e.g., "سی و پنج ممیز یک دهم")</li>
             <li><code>String</code> for using the conjunction "ممیز" or "و" between integer and fractional parts (e.g., " سی و پنج ممیز یک دهم")..</li>
             <li><code>CurrencyOptions</code>: The options for formatting currency, including:
                 <ul>
