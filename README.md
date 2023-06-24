@@ -39,3 +39,68 @@
          alt="Maintainability Rating">
 </a>
 
+[![Java Version](https://img.shields.io/badge/Java-17%2B-orange)](https://www.java.com)
+[![Dependency](https://img.shields.io/badge/Dependency-None-brightgreen)](#)
+[![License](https://img.shields.io/badge/License-MIT-blue)](LICENSE)
+
+Persian Lang Toolbox is a Java library for converting Persian numbers to words and providing additional options for currency.
+
+## Usage
+
+To convert a Persian number to words, use the `PersianWordsConverter.convertToWords()` method with the following parameters:
+
+```java
+String result = PersianWordsConverter.convertToWords(stringNumber,
+    new ConverterOptions(true, false, "ممیز",
+        new CurrencyOptions("دلار", "$")
+    )
+);
+```
+<ul>
+    <li>
+        <code>stringNumber</code>:
+        The number as a string that you want to convert.
+    </li>
+    <li><code>ConverterOptions</code>:
+        The options for formatting the conversion, including:
+        <ul>
+            <li><code>true</code> for add currency word after converted word (e.g., "سی و پنج تومان") </li>
+            <li><code>false</code> for excluding the fractional part (e.g., "سی و پنج").</li>
+            <li><code>String</code> for using the conjunction "ممیز" or "و" between integer and fractional parts (e.g., " سی و پنج ممیز یک دهم")..</li>
+            <li><code>CurrencyOptions</code>: The options for formatting currency, including:
+                <ul>
+                    <li>"دلار" as the currency name (e.g., "صد دلار").</li>
+                    <li>"$" as the currency symbol (e.g., "صد دلار $").</li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+</ul>
+
+```java
+stringNumber = "35.123";
+String result = PersianWordsConverter.convertToWords(stringNumber,
+        new ConverterOptions(true, true, "",
+                new CurrencyOptions("دلار", "")
+        )
+);
+System.out.println(result);
+```
+
+The above code will output:
+```
+سی و پنج دلار
+```
+
+```java
+stringNumber = "1000";
+String result = PersianWordsConverter.convertToWords(stringNumber);
+System.out.println(result);
+```
+
+The above code will output:
+```
+یک هزار
+```
+
+More examples available in test cases.
