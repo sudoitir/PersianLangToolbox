@@ -1,9 +1,13 @@
 # Persian Lang Toolbox
 
-
+[![Java Version](https://img.shields.io/badge/Java-17%2B-orange)](https://www.java.com)
+[![Dependency](https://img.shields.io/badge/Dependency-None-brightgreen)](#)
+[![License](https://img.shields.io/badge/License-MIT-blue)](LICENSE)
 <a href=" https://github.com/sudoitir/PersianLangToolbox/actions/workflows/maven.yml">
     <img src="https://github.com/sudoitir/PersianLangToolbox/actions/workflows/maven.yml/badge.svg" alt="Java CI">
 </a>
+<br>
+
 <a href="https://sonarcloud.io/summary/new_code?id=sudoitir_PersianLangToolbox">
     <img src="https://sonarcloud.io/api/project_badges/measure?project=sudoitir_PersianLangToolbox&metric=code_smells"
          alt="Code Smells">
@@ -33,15 +37,12 @@
     <img src="https://sonarcloud.io/api/project_badges/measure?project=sudoitir_PersianLangToolbox&metric=security_rating"
          alt="Security Rating">
 </a>
-<br>
 <a href="https://sonarcloud.io/summary/new_code?id=sudoitir_PersianLangToolbox">
     <img src="https://sonarcloud.io/api/project_badges/measure?project=sudoitir_PersianLangToolbox&metric=sqale_rating"
          alt="Maintainability Rating">
 </a>
 
-[![Java Version](https://img.shields.io/badge/Java-17%2B-orange)](https://www.java.com)
-[![Dependency](https://img.shields.io/badge/Dependency-None-brightgreen)](#)
-[![License](https://img.shields.io/badge/License-MIT-blue)](LICENSE)
+
 
 Persian Lang Toolbox is a Java library for converting Persian numbers to words and providing additional options for currency.
 
