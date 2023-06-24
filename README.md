@@ -48,10 +48,10 @@ Persian Lang Toolbox is a Java library for converting Persian numbers to words a
 
 ### Convert To Words Usage
 
-To convert a number to Persian words, use the `PersianWordsConverter.convertToWords()` method with the following parameters:
+To convert a number to Persian words, use the `NumberToPersianWords.convertToWords()` method with the following parameters:
 
 ```java
-String result = PersianWordsConverter.convertToWords(stringNumber,
+String result = NumberToPersianWords.convertToWords(stringNumber,
     new ConverterOptions(true, false, "ممیز",
         new CurrencyOptions("دلار", "$")
     )
@@ -80,7 +80,7 @@ String result = PersianWordsConverter.convertToWords(stringNumber,
 
 ```java
 stringNumber = "35.123";
-String result = PersianWordsConverter.convertToWords(stringNumber,
+String result = NumberToPersianWords.convertToWords(stringNumber,
         new ConverterOptions(true, true, "",
                 new CurrencyOptions("دلار", "")
         )
@@ -95,7 +95,7 @@ The above code will output:
 
 ```java
 stringNumber = "1000";
-String result = PersianWordsConverter.convertToWords(stringNumber);
+String result = NumberToPersianWords.convertToWords(stringNumber);
 System.out.println(result);
 ```
 

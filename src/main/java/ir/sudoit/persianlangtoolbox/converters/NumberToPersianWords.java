@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 import static ir.sudoit.persianlangtoolbox.core.constant.NumberConstant.*;
 import static ir.sudoit.persianlangtoolbox.core.utils.NumberUtil.isValidNumber;
 
-public final class PersianWordsConverter {
+public final class NumberToPersianWords {
 
     private static final ConverterOptions CONVERTER_OPTIONS =
             new ConverterOptions(false, false, "ممیز", null);
@@ -38,7 +38,7 @@ public final class PersianWordsConverter {
             "", "دهم", "صدم", "هزارم", "میلیونیم", "میلیاردم", "تریلیونم", "کادریلیون", "کنتیلیون"
     };
 
-    private PersianWordsConverter() {
+    private NumberToPersianWords() {
     }
 
     /**
