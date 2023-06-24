@@ -139,30 +139,46 @@ public final class PersianWordsConverter {
 
         var scaleIndex = 0;
         while (number > 0) {
+            // The last three digits of the number
             long thousand = number % THOUSAND;
+            // If the remainder is not zero, we need to convert the last three digits to Persian words
             if (thousand != 0) {
+                // Create a new StringBuilder object to hold the Persian words for the current three digits.
                 var currentWords = new StringBuilder();
 
+                // If the first digit of the three-digit number is not zero, we need to add the Persian word for that digit followed by "صد" (which means "hundred" in Persian).
                 if (thousand / HUNDRED != 0) {
+                    // Append the Persian word for the first digit to the StringBuilder object.
                     currentWords.append(HUNDREDS[(int) (thousand / HUNDRED)]).append(" ");
                 }
 
+                // The last two digits.
                 long tensUnits = thousand % HUNDRED;
+                // If the last two digits are less than twenty, we can use the Persian word for that number directly.
                 if (tensUnits < TWENTY) {
+                    // Append the Persian word for the last two digits to the StringBuilder object.
                     currentWords.append(UNITS[(int) tensUnits]);
+
+                // If the last two digits are twenty or greater, we need to use the Persian word for the tens digit followed by the Persian word for the units digit.
                 } else {
+                    // Append the Persian words for the tens and units digits to the StringBuilder object.
                     currentWords.append(TENS[(int) (tensUnits / TEN)]).append(" و ").append(UNITS[(int) (tensUnits % TEN)]);
                 }
-
+                // Append the Persian word for the current scale (i.e. ones, thousands, millions, etc.) to the StringBuilder object.
                 currentWords.append(" ").append(SCALES[scaleIndex]);
+                // Insert the Persian words for the current three digits at the beginning of the StringBuilder object.
                 words.insert(0, currentWords.toString().trim() + " ");
             }
 
+            // Divide the number by a thousand to move on to the next three digits.
             number /= THOUSAND;
+            // Increment the scale index to move on to the next scale.
             scaleIndex++;
         }
-        var trimmed = words.toString();
-        return MULTIPLE_SPACES_PATTERN.matcher(trimmed).replaceAll(" ").trim();
+        // Convert the StringBuilder object to a String.
+        var wordsString = words.toString();
+        // Trim any leading or trailing spaces and replace any multiple spaces with a single space, then return the resulting String as the final output of the method.
+        return MULTIPLE_SPACES_PATTERN.matcher(wordsString).replaceAll(" ").trim();
     }
 
 }
