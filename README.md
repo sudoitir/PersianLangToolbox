@@ -46,7 +46,11 @@
 
 Persian Lang Toolbox is a Java library for converting Persian numbers to words and providing additional options for currency.
 
-### Convert To Words Usage
+[Go to Convert To Words Usage](#convert-to-words-usage)
+<br>
+[Go to Persian Number Converter](#persian-number-converter)
+
+## Convert To Words Usage
 
 To convert a number to Persian words, use the `NumberToPersianWords.convertToWords()` method with the following parameters:
 
@@ -105,3 +109,58 @@ The above code will output:
 ```
 
 More examples available in test cases.
+
+## Persian Number Converter
+
+The Persian Number Converter is a utility class that provides methods to convert between English and Persian numbers. It allows converting a given English number to its equivalent Persian representation and vice versa.
+
+### Methods
+
+```java
+/**
+ * Converts an English number to a Persian number.
+ *
+ * @param englishNumber The English number to be converted.
+ * @return The Persian representation of the input English number.
+ */
+public static String convertToPersian(String englishNumber);
+```
+```java
+/**
+ * Converts a Persian number represented as a string to its equivalent English number representation.
+ *
+ * @param persianNumber The Persian number to convert.
+ * @return The English number representation of the given Persian number.
+ */
+public static String convertToEnglish(String persianNumber);
+```
+
+```
+// Example 1: convertToPersian
+String englishNumber1 = "123";
+String persianNumber1 = PersianNumberConverter.convertToPersian(englishNumber1);
+System.out.println(persianNumber1);
+// Output: ۱۲۳
+```
+```
+// Example 2: convertToPersian
+String englishNumber2 = "456";
+String persianNumber2 = PersianNumberConverter.convertToPersian(englishNumber2);
+System.out.println(persianNumber2);
+// Output: ۴۵۶
+```
+```
+// Example 1: convertToEnglish
+String persianNumber1 = "۱۲۳";
+String englishNumber1 = PersianNumberConverter.convertToEnglish(persianNumber1);
+System.out.println(englishNumber1);
+// Output: 123
+```
+```
+// Example 2: convertToEnglish
+String persianNumber2 = "۴۵۶";
+String englishNumber2 = PersianNumberConverter.convertToEnglish(persianNumber2);
+System.out.println(englishNumber2);
+// Output: 456
+```
+
