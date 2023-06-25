@@ -67,7 +67,7 @@ new CurrencyOptions("سنت" ,"$" , "دلار", "")));
 - `ConverterOptions`:
   The options for formatting the conversion, including:
     - `true` for adding the currency word after the converted word (e.g., "سی و پنج تومان").
-    - `false` for excluding the fractional part (e.g., "سی و پنج") or `true` for including the fractional part (e.g., "
+    - `true` for excluding the fractional part (e.g., "سی و پنج") or `false` for including the fractional part (e.g., "
       سی و پنج ممیز یک دهم").
     - `String` for using the conjunction "ممیز" or "و" between the integer and fractional parts (e.g., "سی و پنج ممیز یک
       دهم").
