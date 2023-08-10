@@ -4,6 +4,7 @@ package ir.sudoit.persianlangtoolbox.core.utils;
 public final class StringUtils {
 
     private StringUtils() {
+        throw new UnsupportedOperationException();
     }
 
     public static boolean isBlank(String str) {

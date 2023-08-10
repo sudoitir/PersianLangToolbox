@@ -9,6 +9,7 @@ public final class PersianNumberConverter {
     private static final Map<Character, Character> PERSIAN_TO_ENGLISH_MAPPING = createReverseMapping();
 
     private PersianNumberConverter() {
+        throw new UnsupportedOperationException();
     }
 
     private static Map<Character, Character> createMapping() {

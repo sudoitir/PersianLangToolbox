@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 public final class NumberUtil {
 
     private NumberUtil() {
+        throw new UnsupportedOperationException();
     }
 
     public static String trimTrailingZeros(String input) {

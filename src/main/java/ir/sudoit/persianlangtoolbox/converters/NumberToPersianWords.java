@@ -40,6 +40,7 @@ public final class NumberToPersianWords {
     };
 
     private NumberToPersianWords() {
+        throw new UnsupportedOperationException();
     }
 
     /**
