@@ -44,8 +44,7 @@
 
 
 
-Persian Lang Toolbox is a Java library for converting Persian numbers to words and providing additional options for
-currency.
+Persian Lang Toolbox is a Zero dependency Java library for converts numbers into Persian words, offers additional features for currency conversion, and allows conversion of Persian numbers to English and vice versa.
 
 [Go to Number To Persian Words](#number-to-persian-words)
 <br>
